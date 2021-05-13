@@ -54,6 +54,7 @@ class Director:
             else:
                 self.Dealer.take_turn(False)
         if(self.Dealer.points <= 0):
+            print("Thanks for playing! But you lost! SORRY! =P")
             self.keep_playing = False
             
     def do_outputs(self):
