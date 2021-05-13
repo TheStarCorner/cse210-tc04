@@ -1,5 +1,5 @@
 from game.dealer import Dealer
-#ignore this comment. Attempt 3
+
 class Director:
     """A code template for a person who directs the game. The responsibility of 
     this class of objects is to keep track of the score and control the 
@@ -26,7 +26,6 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
-        print(self.Dealer.card) # for testing purposes only
         while self.keep_playing:
             self.do_updates(self.get_inputs())
             self.do_outputs()
