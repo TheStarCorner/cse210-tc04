@@ -1,5 +1,5 @@
 import random
-#ignore this comment. Attempt 3
+
 class Dealer:
 
 
@@ -62,4 +62,10 @@ class Dealer:
     def keep_playing(self):
         a = self.points > 0
         self.place_in_deck = 0
+        self.card = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+        for x in range(13):
+            i = random.randint(1,13)
+            while self.card.__contains__(i):
+                i = random.randint(1,13)
+            self.card[x] = i
         return a
