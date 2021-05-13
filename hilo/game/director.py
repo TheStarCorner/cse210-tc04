@@ -1,5 +1,5 @@
 from game.dealer import Dealer
-
+#ignore this comment. Attempt 3
 class Director:
     """A code template for a person who directs the game. The responsibility of 
     this class of objects is to keep track of the score and control the 
@@ -18,7 +18,6 @@ class Director:
             self (Director): an instance of Director.
         """
         self.keep_playing = True
-        self.score = 300
         self.Dealer = Dealer()
 
     def start_game(self):
@@ -27,14 +26,10 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
+        print(self.Dealer.card) # for testing purposes only
         while self.keep_playing:
-            self.get_inputs()
-            self.do_updates()
+            self.do_updates(self.get_inputs())
             self.do_outputs()
-
-            # self.do_outputs()
-            # self.get_inputs()
-            # self.do_updates()
             
     def get_inputs(self):
         """Gets the inputs at the beginning of each round of play. In this case,
@@ -43,33 +38,23 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        guess_card = input("Do you think the card will be higher or lower? (h/l): ")
+        print("The current card is", self.Dealer.card[self.Dealer.get_place_in_deck()])
+        return input("Do you think the card will be higher or lower? (h/l): ")
 
-        # self.Dealer.take_turn()
-
-    def do_updates(self, take_turn, guess_card):
+    def do_updates(self, guess_card):
         """Updates the important game information for each round of play. In 
         this case, that means updating the score.
 
         Args:
             self (Director): An instance of Director.
         """
-        # if guess_card == "h":
-        #    if prev_card < current_card:
-        #        score + 100
-        # else:
-        #     score - 75
-        # if guess_card == "l":
-        #    if prev_card < current_card:
-        #        score + 100
-        # else:
-        #     score - 75
-        if self.Dealer.guess_card == 'h':
-            self.Dealer.take_turn(True)
-        else:
-            self.Dealer.take_turn(False)
-            # self.Dealer.take_turn()
-        # self.score += points
+        if(self.Dealer.get_place_in_deck() < 12):
+            if guess_card == 'h':
+                self.Dealer.take_turn(True)
+            else:
+                self.Dealer.take_turn(False)
+        if(self.Dealer.points <= 0):
+            self.keep_playing = False
             
     def do_outputs(self):
         """Outputs the important game information for each round of play. In 
@@ -78,12 +63,14 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        print(f"\nThe current card is: {self.Dealer.card}")
-        guess_card = input("Do you think the card will be higher or lower? (h/l): ")
-        print(f"\nThe next card was: {self.Dealer.card}")
-        print(f"Your current score is: {self.score}")
-        if self.Dealer.keep_playing():
-            choice = input("Do you want to play again? [y/n] ")
-            self.keep_playing = (choice == "y")
-        else:
-            self.keep_playing = False
+        place = self.Dealer.get_place_in_deck()
+        
+        print(f"\nThe next card was: {self.Dealer.card[place]}")
+        print(f"Your current score is: {self.Dealer.get_points()}")
+        if(place > 11):
+            if self.Dealer.keep_playing():
+                choice = input("Do you want to play again? [y/n] ")
+                self.keep_playing = (choice == "y")
+            elif not self.Dealer.keep_playing():
+                self.keep_playing = False
+            
