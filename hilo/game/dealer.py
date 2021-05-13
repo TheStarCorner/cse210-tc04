@@ -9,7 +9,7 @@ class Dealer:
             # result = random.randint[1,13]
             # self.guess_card.append(result)
         self.points = 300
-        self.place_in_deck = 1
+        self.place_in_deck = 0
         self.card = [0,0,0,0,0,0,0,0,0,0,0,0,0]
         for x in range(13):
             i = random.randint(1,13)
@@ -17,20 +17,21 @@ class Dealer:
                 i = random.randint(1,13)
             self.card[x] = i
 
-
+    def get_place_in_deck(self):
+        return self.place_in_deck
 
     def take_turn(self, guess_card):
         current = self.card[self.place_in_deck]
         if guess_card: #if the user guess_carded that the card will be higher than the last card
-            if current > self.card[self.place_in_deck - 1]: #if the current card is higher than the last card (if the user was right)
+            if current > self.card[self.place_in_deck + 1]: #if the current card is higher than the last card (if the user was right)
+                self.points -= 75
+            else: #if the user is wrong
                 self.points += 100
-            else: #if the user is wrong
-                self.points -= 75
         else: #if the user guess_carded that the card will be lower than the last card
-            if current < self.card[self.place_in_deck - 1]: #if the current card is lower than the last card (if the user is right)
-                self.points += 100 
+            if current < self.card[self.place_in_deck + 1]: #if the current card is lower than the last card (if the user is right)
+                self.points -= 75 
             else: #if the user is wrong
-                self.points -= 75
+                self.points += 100
         self.place_in_deck +=1
 
 
@@ -57,3 +58,8 @@ class Dealer:
         # if point = 0:
         #     print ("Game over")   
         return self.points
+
+    def keep_playing(self):
+        a = self.points > 0
+        self.place_in_deck = 0
+        return a
