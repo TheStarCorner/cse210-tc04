@@ -1,5 +1,5 @@
 from game.dealer import Dealer
-
+#ignore this comment. Attempt 3
 class Director:
     """A code template for a person who directs the game. The responsibility of 
     this class of objects is to keep track of the score and control the 
